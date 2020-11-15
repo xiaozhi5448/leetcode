@@ -5,35 +5,39 @@ public class DecodeCount_091 {
 
     public int numDecodings(String s) {
 
-        String msg = s.replaceFirst("^0*", "");
-        if(msg.length() == 1){
-            return 1;
-        }else if(msg.length() == 0){
+//        String msg = s.replaceFirst("^0*", "");
+        String msg = s;
+        if(msg.startsWith("0")){
             return 0;
+        }
+        if(msg.length() < 2){
+            return msg.length();
         }else{
-            if(msg.contains("00")){
-                return 0;
-            }
             int dp[] = new int[msg.length() + 1];
-            dp[0] = 1;dp[1] = 1;
-            for(int i = 2; i<= msg.length(); i++){
+            dp[0] = 1;
+            for(int i = 1; i< msg.length(); i++){
+                if(msg.charAt(i) == '0'){
+                    if(! "12".contains(msg.substring(i-1, i))){
+                        return 0;
+                    }
+                }
                 String neighbours ;
-                if(i != msg.length()){
-                    neighbours = msg.substring(i - 2, i + 1);
+                if(i != msg.length() - 1){
+                    neighbours = msg.substring(i - 1, i + 2);
                 }else{
-                    neighbours = msg.substring(i - 2, msg.length());
+                    neighbours = msg.substring(i - 1, msg.length());
                 }
                 if(neighbours.contains("0")){
                     dp[i] = dp[i -1];
                     continue;
                 }
-                if(Integer.parseInt(msg.substring(i - 2, i)) <= 26 && Integer.parseInt(msg.substring(i - 2, i)) >= 1){
-                    dp[i] = dp[i -1] + dp[i -2];
+                if(Integer.parseInt(msg.substring(i - 1, i + 1)) <= 26 && Integer.parseInt(msg.substring(i - 1, i + 1)) >= 1){
+                    dp[i] = dp[i -1] + dp[i -2>= 0? i - 2:0];
                 }else{
                     dp[i] = dp[i - 1];
                 }
             }
-            return dp[msg.length()];
+            return dp[msg.length() - 1];
 
         }
 
