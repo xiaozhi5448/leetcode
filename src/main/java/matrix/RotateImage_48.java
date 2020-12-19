@@ -20,4 +20,21 @@ public class RotateImage_48 {
             }
         }
     }
+    public  void rotate_2(int[][] matrix){
+        int tmp;
+        for(int row = 0; row < matrix.length /2 ;row++){
+            for(int col = 0; col < matrix.length; col++){
+                tmp = matrix[row][col];
+                matrix[row][col] =  matrix[matrix.length - row -1][col];
+                matrix[matrix.length - row -1][col] = tmp;
+            }
+        }
+        for(int row = 0; row <matrix.length; row ++){
+            for(int col = row + 1; col < matrix.length; col++){
+                tmp = matrix[row][col];
+                matrix[row][col] = matrix[col][row];
+                matrix[col][row] = tmp;
+            }
+        }
+    }
 }
