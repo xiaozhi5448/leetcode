@@ -7,7 +7,6 @@ import static org.junit.Assert.*;
 public class RemoveDuplicateChar_316Test {
 
     @Test
-
     public void removeDuplicateLetters() {
         RemoveDuplicateChar_316 obj = new RemoveDuplicateChar_316();
         String[] tests = {"cbacdcbc", "bcabc", "abacb"};
