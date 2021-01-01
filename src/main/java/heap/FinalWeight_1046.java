@@ -1,5 +1,7 @@
 package heap;
 
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.PriorityQueue;
 
 public class FinalWeight_1046 {
@@ -16,6 +18,7 @@ public class FinalWeight_1046 {
                 pq.offer(a-b);
             }
         }
+        
         return pq.isEmpty()? 0:pq.poll();
     }
 }
