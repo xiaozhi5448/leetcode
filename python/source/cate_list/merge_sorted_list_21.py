@@ -17,6 +17,8 @@ class Solution:
             prev = prev.next
         l = l1 if l1 else l2
         prev.next = l
+        s = set()
+        
         return preHead.next
 def print_list(head:list):
     node = head
