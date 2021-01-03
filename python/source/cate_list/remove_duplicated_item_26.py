@@ -25,14 +25,32 @@ class Solution:
     # 元素的顺序可以改变。你不需要考虑数组中超出新长度后面的元素。
 
     def removeElement(self, nums:list, val:int):
-        i = -1
+        i = 0
         j = 0
-        while j < len(nums):
+        length = len(nums)
+        while j < length and i < length:
+            while i < length and nums[i] != val:
+                i += 1
+            if i == length:
+                return i
+            j = i+1
+            while j < length and nums[j] == val:
+                j += 1
+            if j == length:
+                return i
+            nums[i] = nums[j]
+            nums[j] = val
+        return i
 
 
+
+import random
 
 if __name__ == '__main__':
     so = Solution()
     l = [0,0,1,1,1,2,2,3,3,4]
-    res = so.removeDuplicates(l)
+    # res = so.removeDuplicates(l)
+    random.shuffle(l)
+    res = so.removeElement(l, 1)
+    print(l)
     print(res)
