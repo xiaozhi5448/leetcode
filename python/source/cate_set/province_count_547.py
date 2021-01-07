@@ -54,11 +54,32 @@ class Solution:
         unionSet = UnionFindSet(len(isConnected))
         unionSet.build(isConnected)
         return unionSet.count()
+    def dfs(self,isConnected, visited, node):
+        if not isConnected:
+            return
+        if not visited[node]:
+            visited[node] = True
+            for i in range(len(isConnected)):
+                if isConnected[node][i] == 1 and not visited[i]:
+                    self.dfs(isConnected, visited, i)
+
+    def solution2(self, isConnected):
+        visited = [False] *len(isConnected)
+        nodes = list(range(len(isConnected)))
+        index = 0
+        res = 0
+        while index < len(visited):
+            self.dfs(isConnected, visited, index)
+
+            while index < len(visited) and visited[index]:
+                index += 1
+            res += 1
+        return res
 
 
 if __name__ == '__main__':
     so = Solution()
     isConnected = [[1,0,0,1],[0,1,1,0],[0,1,1,1],[1,0,1,1]]
-    res = so.findCircleNum(isConnected)
+    res = so.solution2(isConnected)
     print(res)
 
