@@ -1,4 +1,6 @@
 java/target/*
 java/.idea/*
 python/.idea/*
+python/.vscode/*
 .idea/*
+java/.vscode/*
