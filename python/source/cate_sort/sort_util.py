@@ -38,7 +38,7 @@ class SortUtil(object):
 
 if __name__ == '__main__':
     import random
-    nums = list(range(10))
+    nums = [1,1,4,2,1,3]
     random.shuffle(nums)
     so = SortUtil()
     so.quick_sort(nums, 0, len(nums) - 1)
