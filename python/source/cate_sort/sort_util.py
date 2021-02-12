@@ -28,7 +28,7 @@ class SortUtil(object):
                         i += 1
                         nums[index], nums[i] = nums[i], nums[index]
                 nums[index+1], nums[end] = nums[end], nums[index+1]
-                return i+1
+                return index+1
             return start
         if start < end:
             mid = partition(nums, start, end)
