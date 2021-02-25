@@ -25,7 +25,7 @@ class SortUtil(object):
                 index = start-1
                 for i in range(start, end):
                     if nums[i] <= pivot:
-                        i += 1
+                        index += 1
                         nums[index], nums[i] = nums[i], nums[index]
                 nums[index+1], nums[end] = nums[end], nums[index+1]
                 return index+1
@@ -38,7 +38,7 @@ class SortUtil(object):
 
 if __name__ == '__main__':
     import random
-    nums = [1,1,4,2,1,3]
+    nums = [6,2,6,5,1,2]
     random.shuffle(nums)
     so = SortUtil()
     so.quick_sort(nums, 0, len(nums) - 1)
