@@ -1,37 +1,30 @@
 package GreedyStrategy;
 
+/**
+ * 给你一个字符串 s 和一个整数数组 cost ，其中 cost[i] 是从 s 中删除字符 i 的代价。
+ *
+ * 返回使字符串任意相邻两个字母不相同的最小删除成本。
+ *
+ * 请注意，删除一个字符后，删除其他字符的成本不会改变。
+ *
+ */
 public class UniqStringMinCost_1578 {
-    public int minCost(String s, int[] cost) {
-        char[] chs = s.toCharArray();
-        int index=0;
-        int len = 0;
-        int res = 0;
-        int cost_val = 0;
-        int max_cost = 0;
-        while(index < s.length()){
-            len = 1;
-            max_cost = 0;
-            cost_val = 0;
-            while(true ){
-                if(index+len < s.length() && chs[index] == chs[index+len]){
-                    len++;
-                }else{
-                    break;
-                }
-            }
-            if(len>1){
-                for(int i = 0; i < len;i++){
-                    cost_val += cost[index+i];
-                    if(cost[index+i] > max_cost){
-                        max_cost = cost[index+i];
-                    }
-                }
-                cost_val -= max_cost;
-                res += cost_val;
-            }
-            index+=len;
 
+    public int minCost(String s, int[] cost) {
+        int index = 0;
+        int maxVal = 0;
+        char[] chs = s.toCharArray();
+        int ret = 0;
+        while(index < chs.length){
+            char ch = chs[index];
+            maxVal = 0;
+            while(index < chs.length && chs[index] == ch){
+                ret += cost[index];
+                maxVal = Math.max(maxVal, cost[index]);
+                index += 1;
+            }
+            ret -= maxVal;
         }
-        return res;
+        return ret;
     }
 }

@@ -6,49 +6,42 @@ import java.util.LinkedList;
 import java.util.Map;
 
 public class LongestSubString_395 {
-    int res = 0;
 
-    public void longestSubstringRecursionUtil(String s, int k) {
-        HashMap<Character, Integer> chs = new HashMap<>();
-        for (int i = 0; i < s.length(); i++) {
-            if (chs.containsKey(s.charAt(i))) {
-                chs.put(s.charAt(i), chs.get(s.charAt(i)) + 1);
-            } else {
-                chs.put(s.charAt(i), 1);
+    private int dfs(String s, int l, int r, int k) {
+        int[] cnt = new int[26];
+        for (int i = l; i <= r; i++) {
+            cnt[s.charAt(i) - 'a']++;
+        }
+        int split = 0;
+        for (int i = 0; i < 26; i++) {
+            if (cnt[i] > 0 && cnt[i] < k) {
+                split = (char) (i + 'a');
+                break;
             }
         }
-        LinkedList<Integer> seperators = new LinkedList<>();
-        int index = -1;
-        for (Map.Entry<Character, Integer> entry : chs.entrySet()) {
-            if (entry.getValue() < k) {
-                while (true) {
-                    index = s.indexOf(entry.getKey(), index + 1);
-                    if (index == -1) {
-                        break;
-                    }
-                    seperators.add(index);
-                }
-            }
+        if (split == 0) {
+            return r - l + 1;
         }
-        if (seperators.isEmpty()) {
-            if (s.length() > res) {
-                res = s.length();
+        int index = l, ret = 0;
+        while (index <= r) {
+            while (index <= r && s.charAt(index) == split) {
+                index++;
             }
-        } else {
-            seperators.add(0, -1);
-            seperators.addLast(s.length());
-            Collections.sort(seperators);
-            for (int i = 1; i < seperators.size(); i++) {
-                if (seperators.get(i) >= seperators.get(i - 1)+k && seperators.get(i) - seperators.get(i-1) > res)
-                    longestSubstringRecursionUtil(s.substring(seperators.get(i - 1) + 1, seperators.get(i)), k);
+            if (index > r) {
+                break;
             }
+            int start = index;
+            while (index <= r && s.charAt(index) != split) {
+                index += 1;
+            }
+            int length = dfs(s, start, index - 1, k);
+            ret = Math.max(length, ret);
         }
+        return ret;
     }
 
     public int longestSubstring(String s, int k) {
-        res = 0;
-        longestSubstringRecursionUtil(s, k);
+        int res = dfs(s, 0, s.length() - 1, k);
         return res;
     }
-
 }

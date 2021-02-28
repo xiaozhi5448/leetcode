@@ -110,4 +110,38 @@ public class SortUtil {
         int[] tmp = new int[nums.length];
         mergeSort(nums, 0, nums.length-1, tmp);
     }
+
+    // heap sort
+    private void swap(int[] nums, int i, int j){
+        int tmp = nums[i];
+        nums[i] = nums[j];
+        nums[j] = tmp;
+    }
+    private void minHeapify(int[] nums, int index, int heapSize){
+        int l = 2*index+1, r = 2*index+2, smallest = index;
+        if(l < heapSize && nums[l] < nums[smallest]){
+            smallest = l;
+        }
+        if(r < heapSize && nums[r] < nums[smallest]){
+            smallest = r;
+        }
+        if(smallest != index){
+            swap(nums, index, smallest);
+            minHeapify(nums, smallest, heapSize);
+        }
+    }
+    private void buildMinHeap(int[] nums, int heapSize){
+        for(int i = heapSize/2;i>=0;i--){
+            minHeapify(nums, i, heapSize);
+        }
+    }
+    public void heapSort(int[] nums){
+        int heapSize = nums.length;
+        buildMinHeap(nums, heapSize);
+        for(int i = nums.length-1; i > 0; i--){
+            swap(nums, 0, i);
+            minHeapify(nums, 0, --heapSize);
+        }
+
+    }
 }

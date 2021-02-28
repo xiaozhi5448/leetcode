@@ -72,4 +72,12 @@ public class SortUtilTest {
         stopWatch.stop();
         logger.info("merge sort cost: " + stopWatch.getTime(TimeUnit.SECONDS));
     }
+
+    @Test
+    public void testHeapSort(){
+        stopWatch.start();
+        util.heapSort(nums);
+        stopWatch.stop();
+        logger.info("heap sort cost: " + stopWatch.getTime(TimeUnit.SECONDS));
+    }
 }
