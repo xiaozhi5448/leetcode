@@ -1,30 +1,25 @@
 package recursion;
 
-import java.util.LinkedList;
-import java.util.List;
+import java.util.Arrays;
 
 public class JumpGame_1306 {
-    boolean[] visited;
-    boolean res = false;
-
-    private void recursionUtil(int[] arr, int start) {
+    private boolean reachRecursionUtil(int[] arr, int start, boolean[] visited) {
+        if (start < 0 || start >= arr.length) {
+            return false;
+        }
         if (arr[start] == 0) {
-            res = true;
+            return true;
         }
-        if (!visited[start]) {
-            visited[start] = true;
-            if (start - arr[start] >= 0) {
-                recursionUtil(arr, start - arr[start]);
-            }
-            if (start + arr[start] < arr.length)
-                recursionUtil(arr, start + arr[start]);
-        }
-
+        if (visited[start])
+            return false;
+        visited[start] = true;
+        return reachRecursionUtil(arr, start - arr[start], visited) || reachRecursionUtil(arr, start + arr[start], visited);
     }
 
     public boolean canReach(int[] arr, int start) {
-        visited = new boolean[arr.length];
-        recursionUtil(arr, start);
+        boolean[] flags = new boolean[arr.length];
+        Arrays.fill(flags, false);
+        boolean res = reachRecursionUtil(arr, start, flags);
         return res;
     }
 }

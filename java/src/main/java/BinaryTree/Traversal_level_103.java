@@ -61,44 +61,35 @@ public class Traversal_level_103 {
     }
 
     public List<List<Integer>> zigzagLevelOrder2(TreeNode root){
-        List<List<Integer>> res = new LinkedList<>();
+        LinkedList<TreeNode> queue = new LinkedList<>();
+        LinkedList<List<Integer>> res = new LinkedList<>();
         if(root == null){
             return res;
         }
-        LinkedList<TreeNode> queue = new LinkedList<>();
-        int direction = 1;
         queue.addLast(root);
         queue.addLast(null);
-        LinkedList<Integer> levelnums = new LinkedList<>();
+        boolean left2right = true;
+        LinkedList<Integer> line = new LinkedList<>();
         while(!queue.isEmpty()){
             TreeNode node = queue.pollFirst();
             if(node != null){
-                levelnums.add(node.val);
-                if(node.left !=null)
-                queue.addLast(node.left);
-                if(node.right !=null)
+                line.add(node.val);
+                if(node.left != null)
+                    queue.addLast(node.left);
+                if(node.right != null)
                     queue.addLast(node.right);
             }else{
-                if(direction == 1){
-                    res.add(levelnums);
-                }else{
-                    Collections.reverse(levelnums);
-                    res.add(levelnums);
+                if(!queue.isEmpty())
+                    queue.addLast(null);
+                if(!left2right){
+                    Collections.reverse(line);
                 }
-                if(queue.isEmpty()){
-
-                    break;
-                }
-                levelnums = new LinkedList<>();
-                direction = direction==1? 0:1;
-
-                queue.addLast(null);
-
-
+                left2right = !left2right;
+                res.addLast(line);
+                line = new LinkedList<>();
             }
         }
         return res;
-
     }
 
 
