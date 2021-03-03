@@ -4,3 +4,4 @@ python/.idea/*
 python/.vscode/*
 .idea/*
 java/.vscode/*
+target/*
