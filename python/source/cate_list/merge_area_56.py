@@ -6,7 +6,6 @@ class Solution:
         intervals.sort(key=cmp_to_key(lambda a,b: a[0]-b[0] if a[0]!= b[0] else a[1] - b[1]))
         index = 0
         res = []
-
         while index < length:
             current_area = intervals[index].copy()
             index += 1
