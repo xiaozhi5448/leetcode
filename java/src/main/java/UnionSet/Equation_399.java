@@ -18,10 +18,10 @@ public class Equation_399 {
         }
         Node root = nodePtr;
         nodePtr = node;
-
+        return null;
     }
 
     public double[] calcEquation(List<List<String>> equations, double[] values, List<List<String>> queries) {
-
+        return null;
     }
 }
