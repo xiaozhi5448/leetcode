@@ -6,6 +6,7 @@ class Solution:
             for i, num in enumerate(self.nums):
                 if visited[i]:
                     continue
+
                 else:
                     visited[i] = True
                     rank.append(self.nums[i])
