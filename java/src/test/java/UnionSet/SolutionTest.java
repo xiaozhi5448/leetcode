@@ -4,6 +4,7 @@ import junit.framework.TestCase;
 import org.junit.Test;
 
 import java.util.Arrays;
+import java.util.Random;
 
 public class SolutionTest  {
     @Test
@@ -13,5 +14,8 @@ public class SolutionTest  {
         String[] synonyms = {"(Jon,John)","(John,Johnny)","(Chris,Kris)","(Chris,Christopher)"};
         String[] res = solution.trulyMostPopular(names, synonyms);
         System.out.println(Arrays.toString(res));
+        Random rand = new Random();
+        for(int i = 0; i< 10 ;i++)
+        System.out.println(rand.nextFloat());
     }
 }
