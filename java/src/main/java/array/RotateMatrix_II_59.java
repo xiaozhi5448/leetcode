@@ -1,5 +1,8 @@
 package array;
 
+import java.util.*;
+import java.util.stream.Collectors;
+
 /**
  * 给你一个正整数 n ，生成一个包含 1 到 n2 所有元素，且元素按顺时针顺序螺旋排列的 n x n 正方形矩阵 matrix 。
  *
@@ -28,5 +31,19 @@ public class RotateMatrix_II_59 {
             l++;
         }
         return matrix;
+    }
+
+    public static void main(String[] args) {
+
+        Scanner scanner = new Scanner(System.in);
+        while(scanner.hasNext()){
+            String s = scanner.nextLine();
+            String[] nums = s.strip().split(" ");
+            List<Integer> items = Arrays.stream(nums).map((item)-> Integer.valueOf(item)).collect(Collectors.toList());
+            System.out.println(items.toString());
+            Integer[] n = items.toArray(new Integer[items.size()]);
+            System.out.println(Arrays.deepToString(n));
+        }
+
     }
 }

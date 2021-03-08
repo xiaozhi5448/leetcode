@@ -43,7 +43,7 @@ public class WordSplit_139 {
                 dp[i] = false;
                 continue;
             }else{
-                for(int j = Math.max(i-maxLen, 0); j+minLen <= i; j++){
+                for(int j = Math.max(i-maxLen, 0); j+minLen < i; j++){
                     if(strs.contains(s.substring(j, i)) && dp[j]){
                         dp[i] = true;
                         break;
