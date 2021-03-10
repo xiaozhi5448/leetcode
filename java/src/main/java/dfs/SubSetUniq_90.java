@@ -6,10 +6,11 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
- * 找到所有不重复的全排列
+ * 找到所有不重复的子集
  */
 public class SubSetUniq_90 {
     private void dfs(int[] nums, int index, List<List<Integer>> res, List<Integer> subset){
+
         if(index <= nums.length){
             res.add(new ArrayList<>(subset));
         }

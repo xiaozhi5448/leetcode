@@ -6,6 +6,8 @@ import java.util.List;
 
 /**
  * 给定一个可包含重复数字的序列 nums ，按任意顺序 返回所有不重复的全排列。
+ *
+ * 排序之后dfs，注意每轮选择的时候相同元素只能选择一次
  */
 public class CompletePermuteII_47 {
 

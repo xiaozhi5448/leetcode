@@ -2,25 +2,25 @@ package sort;
 
 public class SortUtil {
 
+    private static void swap(int[] nums, int i, int j){
+        int tmp = nums[i];
+        nums[i] = nums[j];
+        nums[j] = tmp;
+    }
     private static int partition(int[] nums, int start, int end){
         if(start >= end){
             return start;
         }
-        int tmp;
         int index = start - 1;
         int pivot = nums[end];
         for(int i = start; i< end;i++){
             if(nums[i] < pivot){
                 index += 1;
-                tmp = nums[index];
-                nums[index] = nums[i];
-                nums[i] = tmp;
+                swap(nums, index, i);
             }
         }
         index += 1;
-        tmp = nums[index];
-        nums[index] = nums[end];
-        nums[end] = tmp;
+        swap(nums, index, end);
         return index;
     }
     public static void quickSort(int[] nums, int start, int end){
@@ -37,9 +37,7 @@ public class SortUtil {
         for(int bound=nums.length-1; bound>0;bound--){
             for(int index = 0; index < bound; index++){
                 if(nums[index] > nums[index+1]){
-                    tmp = nums[index+1];
-                    nums[index+1] = nums[index];
-                    nums[index] = tmp;
+                    swap(nums, index, index+1);
                 }
             }
         }
@@ -50,9 +48,7 @@ public class SortUtil {
         for(int left = 0; left < nums.length; left++){
             for(int right = left+1; right< nums.length;right++){
                 if(nums[right] < nums[left]){
-                    tmp = nums[right];
-                    nums[right] = nums[left];
-                    nums[left] = tmp;
+                    swap(nums, left, right);
                 }
             }
         }
@@ -78,7 +74,7 @@ public class SortUtil {
         int i = left, j = mid+1;
         int tmp_ptr = 0;
         while(i <= mid && j <= right ){
-            if(nums[i] > nums[j]){
+            if(nums[i] >= nums[j]){
                 temp[tmp_ptr++] = nums[j++];
             }else{
                 temp[tmp_ptr++] = nums[i++];
@@ -90,14 +86,15 @@ public class SortUtil {
         while(j <= right){
             temp[tmp_ptr++] = nums[j++];
         }
-        tmp_ptr = 0;
-        int copy_ptr = left;
-        while(copy_ptr <= right){
-            nums[copy_ptr++] = temp[tmp_ptr++];
-        }
+//        tmp_ptr = 0;
+//        int copy_ptr = left;
+//        while(copy_ptr <= right){
+//            nums[copy_ptr++] = temp[tmp_ptr++];
+//        }
+        System.arraycopy(temp,0, nums, left, right-left+1);
 
     }
-    public static void mergeSort(int[] nums, int start, int end, int[] tmp){
+    private static void mergeSort(int[] nums, int start, int end, int[] tmp){
         if(start >= end){
             return;
         }
@@ -112,11 +109,7 @@ public class SortUtil {
     }
 
     // heap sort
-    private void swap(int[] nums, int i, int j){
-        int tmp = nums[i];
-        nums[i] = nums[j];
-        nums[j] = tmp;
-    }
+
     private void minHeapify(int[] nums, int index, int heapSize){
         int l = 2*index+1, r = 2*index+2, smallest = index;
         if(l < heapSize && nums[l] < nums[smallest]){

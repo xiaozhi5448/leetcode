@@ -15,8 +15,9 @@ public class SubSet_78 {
             res.add(new ArrayList<>(subset));
             return;
         }else{
+            // 不选择当前元素
             dfs(nums, index+1, res, subset);
-
+            // 选择当前元素
             subset.add(nums[index]);
             dfs(nums, index+1, res, subset);
             subset.remove(subset.size()-1);

@@ -208,7 +208,6 @@ public class Traversal {
         int white = 0, gray = 1;
         Stack<Pair> bulk = new Stack<Pair>();
         if (root != null) {
-
             bulk.push(new Pair(white, root));
         }
         List<Integer> res = new LinkedList<Integer>();
