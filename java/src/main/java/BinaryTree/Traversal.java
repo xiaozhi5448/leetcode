@@ -164,30 +164,31 @@ public class Traversal {
     }
 
     public List<List<Integer>> levelorder(TreeNode root) {
-        Queue<TreeNode> prevQueue = new LinkedList<TreeNode>();
-        Queue<TreeNode> currentQueue = new LinkedList<TreeNode>();
+        Queue<TreeNode> queue = new LinkedList<TreeNode>();
+        Queue<Integer> line = new LinkedList<>();
         List<List<Integer>> res = new LinkedList<List<Integer>>();
         if (root != null) {
-            prevQueue.offer(root);
+            queue.offer(root);
+            queue.offer(null);
         }
-        while (!prevQueue.isEmpty()) {
-            currentQueue.clear();
-            List<Integer> currentLevel = new LinkedList<Integer>();
-            while (!prevQueue.isEmpty()) {
-                TreeNode node = prevQueue.poll();
-                currentLevel.add(node.val);
-                if (node.left != null) {
-                    currentQueue.offer(node.left);
+        while (!queue.isEmpty()) {
+            TreeNode node = queue.poll();
+            if(node == null){
+                res.add(new LinkedList<Integer>(line));
+                line.clear();
+                if(queue.isEmpty()){
+                    break;
                 }
-                if (node.right != null) {
-                    currentQueue.offer(node.right);
+                queue.offer(null);
+            }else{
+                line.add(node.val);
+                if(node.left!= null){
+                    queue.offer(node.left);
+                }
+                if(node.right != null){
+                    queue.offer(node.right);
                 }
             }
-            res.add(currentLevel);
-
-            Queue<TreeNode> tmp = prevQueue;
-            prevQueue = currentQueue;
-            currentQueue = tmp;
         }
         return res;
     }
