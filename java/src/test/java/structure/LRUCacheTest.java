@@ -12,5 +12,12 @@ public class LRUCacheTest extends TestCase {
         System.out.println(util.get(3));
         util.put(4,5);
         System.out.println(util.getOrDefault(3, -1));
+
+        LRUCache2<Integer,Integer> cache2 = new LRUCache2<>(3);
+        for(int i = 0; i < 3; i++){
+            cache2.put(i,i);
+        }
+        cache2.put(4,1);
+        System.out.println(cache2.get(0));
     }
 }
