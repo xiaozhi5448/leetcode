@@ -27,13 +27,13 @@ public class SwimPool_778 {
                     if(visited[row][col] || grid[row][col] > t)
                         continue;
                     visited[row][col] = true;
-                    if(row-1 > 0 && grid[row-1][col] <= t){
+                    if(row-1 >= 0 && grid[row-1][col] <= t){
                         uf.union(row*N + col, (row-1)*N + col);
                     }
                     if(row+1 < N && grid[row+1][col] <= t){
                         uf.union(row*N+col, (row+1)*N + col);
                     }
-                    if(col-1 > 0 && grid[row][col-1] <= t){
+                    if(col-1 >= 0 && grid[row][col-1] <= t){
                         uf.union(row*N+col, row*N+col-1);
                     }
                     if(col+1 < N && grid[row][col+1] <= t){
