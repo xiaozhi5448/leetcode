@@ -12,74 +12,43 @@ package UnionSet;
  */
 
 public class SwimPool_778 {
-    private int parent(int[] nodes, int node){
-        int node_ptr = node;
-        while(nodes[node_ptr]!= node_ptr){
-            node_ptr = nodes[node_ptr];
-        }
-        int root = node_ptr;
-        node_ptr = node;
-        while(node_ptr != root){
-            int parent = nodes[node_ptr];
-            nodes[node_ptr] = root;
-            node_ptr = parent;
-        }
-        return root;
-    }
-
-    private boolean merge(int[] parents, int node1, int node2){
-        int p1 = parent(parents, node1);
-        int p2 = parent(parents, node2);
-        if(p1 == p2){
-            return false;
-        }else{
-            parents[p1] = p2;
-            return true;
-        }
-    }
 
     public int swimInWater(int[][] grid) {
-        int rowCount = grid.length;
-        if(rowCount>0){
-            int colCount = grid[0].length;
-            int[] nodes = new int[rowCount*colCount];
-            boolean[] visited = new boolean[nodes.length];
-            for(int i = 0; i < nodes.length; i++){
-                nodes[i] = i;
-                visited[i] = false;
-            }
-            int t = Math.max(grid[0][0], grid[rowCount-1][colCount-1]);
-            while(true){
-                for(int row = 0; row < rowCount; row++){
-                    for(int col =0 ; col <colCount; col++){
-                        if(visited[row*rowCount+col]){
-                            continue;
-                        }
-                        if(grid[row][col] <= t){
-                            visited[row*rowCount+col] = true;
-                            if(row-1>= 0 && grid[row-1][col] <= t)
-                                merge(nodes, row*rowCount+col, (row-1)*rowCount+col);
-                            if(row+1 < rowCount && grid[row+1][col] <= t){
-                                merge(nodes, (row+1)*rowCount + col, row*rowCount+col);
-                            }
-                            if(col-1 >= 0 && grid[row][col-1] <= t){
-                                merge(nodes, row*rowCount+col, row*rowCount + col-1);
-                            }
-                            if(col+1<colCount&&grid[row][col+1] <= t){
-                                merge(nodes, row*rowCount+col, row*rowCount+col+1);
-                            }
-                        }
+        int N = grid.length;
+        if(N == 0){
+            return -1;
+        }
+        UnionFind uf = new UnionFind(N*N);
+        boolean[][] visited = new boolean[N][N];
+        int t = Math.max(grid[0][0], grid[N-1][N-1]);
+        while(true){
+            for(int row = 0; row < N; row++){
+                for(int col = 0; col <N; col++){
+                    if(visited[row][col] || grid[row][col] > t)
+                        continue;
+                    visited[row][col] = true;
+                    if(row-1 > 0 && grid[row-1][col] <= t){
+                        uf.union(row*N + col, (row-1)*N + col);
+                    }
+                    if(row+1 < N && grid[row+1][col] <= t){
+                        uf.union(row*N+col, (row+1)*N + col);
+                    }
+                    if(col-1 > 0 && grid[row][col-1] <= t){
+                        uf.union(row*N+col, row*N+col-1);
+                    }
+                    if(col+1 < N && grid[row][col+1] <= t){
+                        uf.union(row*N+col, row*N + col+1);
                     }
                 }
-                int p1 = parent(nodes, 0);
-                int p2 = parent(nodes, rowCount*colCount-1);
-                if(p1 == p2){
-                    break;
-                }
-                t++;
             }
-            return t;
+            int p1 = uf.find(0);
+            int p2 = uf.find(N*N-1);
+            if(p1 == p2){
+                break;
+            }
+            t++;
         }
-        return -1;
+        return t;
+
     }
 }
