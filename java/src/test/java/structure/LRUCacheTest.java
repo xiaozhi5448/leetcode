@@ -19,5 +19,12 @@ public class LRUCacheTest extends TestCase {
         }
         cache2.put(4,1);
         System.out.println(cache2.get(0));
+
+        LRUCache3 lruCache3 = new LRUCache3(3);
+        for(int i = 0; i < 3; i++){
+            lruCache3.put(i, i);
+        }
+        lruCache3.put(4,4);
+        System.out.println(lruCache3.get(0));
     }
 }
