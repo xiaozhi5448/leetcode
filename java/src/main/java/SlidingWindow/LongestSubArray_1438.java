@@ -2,7 +2,7 @@ package SlidingWindow;
 
 import java.util.TreeMap;
 
-public class LongestSubArray {
+public class LongestSubArray_1438 {
     public int longestSubArray(int[] nums, int limit){
         TreeMap<Integer, Integer> map = new TreeMap<>();
         int left = 0, right = 0;

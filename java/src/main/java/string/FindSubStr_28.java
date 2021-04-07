@@ -53,22 +53,49 @@ public class FindSubStr_28 {
 
     int[] calNext(String needle){
         int[] res = new int[needle.length()+1];
-        res[0] = -1;
-        for(int length = 2; length < needle.length(); length++){
+        res[0] = 0;
+        for(int length = 2; length <= needle.length(); length++){
             int prevLen = length-1;
             while(true){
-                if(needle.charAt(length) == needle.charAt(res[prevLen])){
+                if(needle.charAt(length-1) == needle.charAt(res[prevLen])){
                     res[length] = res[prevLen] + 1;
                     break;
                 }else{
                     prevLen = res[prevLen];
-                    if(res[prevLen] == -1){
-                        res[length] = 0;
+                    if(res[prevLen] == 0){
+                        res[length] = needle.charAt(length-1) == needle.charAt(res[prevLen])?1: 0;
                         break;
                     }
                 }
             }
         }
         return res;
+    }
+
+    int strStrWithKmp(String haystack, String needle){
+        if(needle.length() == 0){
+            return 0;
+        }
+        if(haystack.length() < needle.length()){
+            return -1;
+        }
+        int[] next = calNext(needle);
+        int patternIndex = 0, matchIndex = 0;
+        while(matchIndex < haystack.length() && patternIndex < needle.length()){
+            if(haystack.charAt(matchIndex) == needle.charAt(patternIndex)){
+                matchIndex++;
+                patternIndex++;
+            }else{
+                if(patternIndex == 0){
+                    matchIndex++;
+                }else
+                    patternIndex = next[patternIndex];
+            }
+        }
+        if(patternIndex == needle.length()){
+            return matchIndex - needle.length();
+        }else{
+            return -1;
+        }
     }
 }
