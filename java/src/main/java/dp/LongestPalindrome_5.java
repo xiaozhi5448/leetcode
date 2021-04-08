@@ -21,11 +21,9 @@ public class LongestPalindrome_5 {
                 int base = center/ 2;
                 right = base;
                 left = base;
-
             }else{
                 left = center /2;
                 right = left+1;
-
             }
             while(left >= 0 && right <= chs.length-1){
                 if(chs[left] == chs[right]){
@@ -68,8 +66,6 @@ public class LongestPalindrome_5 {
                 }
             }
         }
-
         return res;
-
     }
 }
