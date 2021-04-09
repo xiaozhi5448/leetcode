@@ -1,4 +1,4 @@
-package heap;
+package SlidingWindow;
 
 import java.util.Comparator;
 import java.util.PriorityQueue;

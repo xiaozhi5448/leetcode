@@ -1,10 +1,9 @@
 package heap;
 
+import SlidingWindow.MaxSlidingWindow_239;
 import org.junit.Test;
 
 import java.util.Arrays;
-
-import static org.junit.Assert.*;
 
 public class MaxSlidingWindow_239Test {
 
