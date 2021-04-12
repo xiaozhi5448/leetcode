@@ -1,27 +1,26 @@
 package thread;
 
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.FutureTask;
+
 public class Q2 {
-    static Integer res = 0;
-    static int calStage(int i, int count, int total){
-        int step = total/count;
-        int stage = 0;
-        for(int pivot = i * step+1; pivot <=(i+1)*step; pivot++){
-            stage += pivot;
-        }
-        return stage;
-    }
     public static void main(String[] args) {
-        int threadCount = 5;
-        int upper = 10000;
+        int res = 0;
+        final int threadCount = 5;
+        final int upper = 10000;
         Thread[] threads = new Thread[threadCount];
+        FutureTask<Integer>[] tasks = new FutureTask[threadCount];
         for(int i = 0; i < 5; i++){
             final int t = i;
-            threads[i] = new Thread(()->{
-                int stage = calStage(t, threadCount, upper);
-                synchronized (res){
-                    res += stage;
+            tasks[t] = new FutureTask<Integer>(()->{
+                int step = upper/threadCount;
+                int stage = 0;
+                for(int pivot = t*step+1; pivot <= (t+1)*step; pivot++){
+                    stage += pivot;
                 }
+                return stage;
             });
+            threads[i] = new Thread(tasks[t]);
         }
         for(int i = 0; i< threadCount; i++){
             threads[i].start();
@@ -29,8 +28,9 @@ public class Q2 {
         try{
             for(int i = 0; i < threadCount; i++){
                 threads[i].join();
+                res += tasks[i].get();
             }
-        }catch (InterruptedException e){
+        }catch (Exception e1){
             System.out.println(Thread.currentThread().getName() + " Interrupted!");
         }
         System.out.println(res);
