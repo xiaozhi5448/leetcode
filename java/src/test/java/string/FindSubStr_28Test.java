@@ -28,5 +28,6 @@ public class FindSubStr_28Test {
         String haystack = "ababcaababcaabc";
         String needle = "ababcaabc";
         assertEquals(util.strStrWithKmp(haystack, needle) ,haystack.indexOf(needle));
+        System.out.println(haystack.indexOf(needle));
     }
 }

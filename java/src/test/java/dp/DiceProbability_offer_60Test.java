@@ -3,6 +3,8 @@ package dp;
 import junit.framework.TestCase;
 
 import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class DiceProbability_offer_60Test extends TestCase {
 

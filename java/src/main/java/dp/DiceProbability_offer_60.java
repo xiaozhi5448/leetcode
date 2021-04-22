@@ -18,9 +18,7 @@ public class DiceProbability_offer_60 {
     public double[] dicesProbability(int n) {
         // 声明dp数组
         int[][] dp = new int[n+1][6*n+1];
-        for(int i = 1; i <= 6; i++){
-            dp[1][i] = 1;
-        }
+        Arrays.fill(dp[1], 1, 7, 1);
         // 计算第i个骰子投掷后的结果
         for(int count=2; count <= n; count++){
             for(int dices = count; dices <= 6*count; dices++){
