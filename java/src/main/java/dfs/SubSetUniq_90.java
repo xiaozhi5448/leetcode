@@ -10,7 +10,6 @@ import java.util.List;
  */
 public class SubSetUniq_90 {
     private void dfs(int[] nums, int index, List<List<Integer>> res, List<Integer> subset){
-
         if(index <= nums.length){
             res.add(new ArrayList<>(subset));
         }
