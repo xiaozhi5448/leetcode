@@ -25,6 +25,9 @@ import java.util.*;
 public class Traversal {
     List<Integer> res = new LinkedList<Integer>();
 
+    public List<Integer> getRes(){
+        return res;
+    }
     public void clear() {
         res.clear();
     }
