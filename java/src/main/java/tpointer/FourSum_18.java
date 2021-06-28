@@ -23,23 +23,19 @@ public class FourSum_18 {
                 left = second+1;
                 right = nums.length-1;
                 while(left < right){
+                    if(left > second+1 && nums[left] == nums[left-1]){
+                        left++;continue;
+                    }
+                    if(right < nums.length-1 && nums[right] == nums[right+1]){
+                        right--;continue;
+                    }
                     int sum = nums[first]+nums[second]+nums[left] + nums[right];
                     if(sum<target){
                         left++;
-                        while(left<right && nums[left]==nums[left-1])
-                            left++;
                     }else if(sum > target){
                         right--;
-                        while(left<right && nums[right] == nums[right+1])
-                            right--;
                     }else{
-                        res.add(Arrays.asList(nums[first], nums[second], nums[left], nums[right]));
-                        left++;
-                        while(left<right && nums[left]==nums[left-1])
-                            left++;
-                        right--;
-                        while(left<right && nums[right] == nums[right+1])
-                            right--;
+                        res.add(Arrays.asList(nums[first], nums[second], nums[left++], nums[right--]));
                     }
                 }
 
