@@ -5,21 +5,22 @@ public class TripleStack {
     int stackSize;
     int[] nums;
     int[][] indexs;
+
     public TripleStack(int Size) {
-        size = Size *3;
+        size = Size * 3;
         stackSize = Size;
         nums = new int[size];
         indexs = new int[3][2];
-        for(int i = 0; i< 3; i++){
-            indexs[i][0] = indexs[i][1] = i*stackSize;
+        for (int i = 0; i < 3; i++) {
+            indexs[i][0] = indexs[i][1] = i * stackSize;
         }
 
     }
 
     public void push(int stackNum, int value) {
-        if(indexs[stackNum][1] - indexs[stackNum][0] >= stackSize){
+        if (indexs[stackNum][1] - indexs[stackNum][0] >= stackSize) {
             return;
-        }else{
+        } else {
             nums[indexs[stackNum][1]] = value;
             indexs[stackNum][1]++;
 
@@ -27,7 +28,7 @@ public class TripleStack {
     }
 
     public int pop(int stackNum) {
-        if(isEmpty(stackNum)){
+        if (isEmpty(stackNum)) {
             return -1;
         }
         int res = nums[indexs[stackNum][1] - 1];
@@ -36,7 +37,7 @@ public class TripleStack {
     }
 
     public int peek(int stackNum) {
-        if(isEmpty(stackNum)){
+        if (isEmpty(stackNum)) {
             return -1;
         }
         return nums[indexs[stackNum][1] - 1];
