@@ -1,10 +1,9 @@
 package dfs;
 
+import dfs.permutation.CompletePermuteII_47;
 import org.junit.Test;
 
 import java.util.List;
-
-import static org.junit.Assert.*;
 
 
 public class CompletePermuteII_47Test {

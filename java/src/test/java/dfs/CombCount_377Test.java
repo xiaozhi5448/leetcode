@@ -1,8 +1,7 @@
 package dfs;
 
+import dfs.combination.CombCount_377;
 import org.junit.Test;
-
-import static org.junit.Assert.*;
 
 public class CombCount_377Test {
 

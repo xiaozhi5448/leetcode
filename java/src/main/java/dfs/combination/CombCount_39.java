@@ -1,4 +1,4 @@
-package dfs;
+package dfs.combination;
 
 import java.util.ArrayList;
 import java.util.LinkedList;

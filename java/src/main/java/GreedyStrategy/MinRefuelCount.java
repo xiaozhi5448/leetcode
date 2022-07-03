@@ -46,7 +46,6 @@ public class MinRefuelCount {
     public int minRefuelStops(int target, int startFuel, int[][] stations) {
         int res = 0, curr = 0, prev = 0;
         int fuel = startFuel;
-
         PriorityQueue<Integer> fuels = new PriorityQueue<>((a, b) -> b - a);
         for (int i = 0; i <= stations.length; i++) {
             if (i < stations.length) {
@@ -68,5 +67,4 @@ public class MinRefuelCount {
         }
         return res;
     }
-
 }
