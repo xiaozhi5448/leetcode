@@ -1,3 +1,4 @@
+from typing import List
 class SortUtil(object):
     def __init__(self):
         pass
@@ -35,6 +36,23 @@ class SortUtil(object):
             self.quicksort(nums, start, mid-1)
             self.quicksort(nums, mid+1, end)
 
+    def productExceptSelf(self, nums: List[int]) -> List[int]:
+        mul_left = [0] * len(nums)
+        mul_right = [0] * len(nums)
+        mul_left[0] = 1
+        mul_right[-1] = 1
+        for i in range(1, len(nums)):
+            mul_left[i] = nums[i-1] * mul_left[i-1]
+
+        for i in range(len(nums)-2, -1, -1):
+            mul_right[i]  = nums[i+1] * mul_right[i+1]
+
+        res = [0] * len(nums)
+        for i in range(i):
+            res[i] = mul_left[i] * mul_right[i]
+        return res
+
+
 
 if __name__ == '__main__':
     import random
@@ -43,3 +61,6 @@ if __name__ == '__main__':
     so = SortUtil()
     so.quick_sort(nums, 0, len(nums) - 1)
     print(nums)
+
+    so.productExceptSelf([1,2,3,4])
+
