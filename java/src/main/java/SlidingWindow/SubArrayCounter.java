@@ -1,4 +1,6 @@
-package dp;
+package SlidingWindow;
+
+import java.util.Arrays;
 
 /**
  * 2962. Count Subarrays Where Max Element Appears at Least K Times
@@ -55,38 +57,55 @@ public class SubArrayCounter {
         return cnt;
     }
     public long countSubarrays(int[] nums, int k) {
-        return doCountByDp(nums, k);
+        return doCountBySlidingWindow(nums, k);
     }
 
     public long doCountBySlidingWindow(int[] nums, int k) {
         if(nums.length == 0){
             return 0;
         }
-        int m = nums[0];
+        int maxElement = nums[0];
         for (int num : nums) {
-            m = Math.max(m, num);
+            maxElement = Math.max(maxElement, num);
         }
-        int res = 0;
+        int length = nums.length;
         int left = 0;
-        int right = left;
-        int max_cnt = 0;
-        while (left < nums.length){
-            if(left == right){
-                max_cnt = nums[left] == m? 1:0;
+        long cnt = 0;
+        long windowMaxCnt = 0;
+        for(int right = 0; right < length; right++){
+            if(nums[right] == maxElement){
+                windowMaxCnt += 1;
             }
-            while(right < nums.length && max_cnt < k){
-                max_cnt += nums[right] == m? 1:0;
-                right += 1;
+            // 移动left指针
+
+            while (windowMaxCnt == k) {
+                if (nums[left] == maxElement) {
+                    windowMaxCnt--;
+                }
+                left++;
             }
-            if(max_cnt >= k){
-                res += 1;
-            }
-            while(left <= right && max_cnt >= k){
-                max_cnt -= nums[left] == m? 1:0;
-                res += 1;
-                left += 1;
-            }
+            cnt += left;
         }
-        return res;
+        return cnt;
+    }
+
+    public long solution(int[] nums, int k) {
+        int maxElement = Arrays.stream(nums).max().getAsInt();
+        long ans = 0, start = 0;
+        int maxElementsInWindow = 0;
+
+        for (int end = 0; end < nums.length; end++) {
+            if (nums[end] == maxElement) {
+                maxElementsInWindow++;
+            }
+            while (maxElementsInWindow == k) {
+                if (nums[(int) start] == maxElement) {
+                    maxElementsInWindow--;
+                }
+                start++;
+            }
+            ans += start;
+        }
+        return ans;
     }
 }
