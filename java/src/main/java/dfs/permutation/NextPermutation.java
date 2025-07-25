@@ -51,6 +51,17 @@ public class NextPermutation {
         nums[j] = tmp;
     }
 
+    public void reverse(int[] nums, int start, int end){
+        int left = start, right = end;
+        while(left < right){
+            int tmp = nums[left];
+            nums[left] = nums[right];
+            nums[right] = tmp;
+            left++;
+            right--;
+        }
+    }
+
     public void nextPermutation(int[] nums) {
         int i = nums.length - 2;
         while (i >= 0 && nums[i] >= nums[i + 1]) {
@@ -65,6 +76,6 @@ public class NextPermutation {
             j--;
         }
         swap(nums, i, j);
-        Arrays.sort(nums, i + 1, nums.length);
+        reverse(nums, i + 1, nums.length-1);
     }
 }

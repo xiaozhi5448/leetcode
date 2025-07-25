@@ -37,4 +37,22 @@ public class CommonSolutionTest extends TestCase {
 
 
     }
+
+    public void testLongestSubstring() {
+        CommonSolution commonSolution = new CommonSolution();
+        String s = "aaabb";
+        Assert.assertEquals(3, commonSolution.longestSubstring(s, 3));
+        s = "ababbc";
+        Assert.assertEquals(5, commonSolution.longestSubstring(s, 2));
+        s = "bbaaacbd";
+        Assert.assertEquals(3, commonSolution.longestSubstring(s, 3));
+    }
+
+    public void testNumberOfArithmeticSlices() {
+        CommonSolution commonSolution = new CommonSolution();
+        int[] nums = new int[]{1,2,3,4};
+        Assert.assertEquals(3, commonSolution.numberOfArithmeticSlices(nums));
+        nums = new int[]{1,2,3,8,9,10};
+        Assert.assertEquals(2, commonSolution.numberOfArithmeticSlices(nums));
+    }
 }
