@@ -172,30 +172,40 @@ public class CommonSolution {
      * -104 <= nums[i] <= 104
      */
     public int lengthOfLIS(int[] nums) {
-        int length = nums.length;
-        int[] dp = new int[length];
-        int[] maxOfLts = new int[length];
-        dp[0] = 1;
-        maxOfLts[0] = nums[0];
-        if(nums.length < 2){
+        int[] dp = new int[nums.length];
+        Arrays.fill(dp, 1);
+        if(nums.length <= 1){
             return nums.length;
         }
-        int res = 0;
-        for(int i = 1; i < nums.length; i++){
-            // 遍历 0-i 看 nums[i] >= maxOfLts[t]
+        dp[0] = 1;
+        int len = 0;
+        for(int i = 1; i < nums.length;i++){
             for(int j = 0; j < i; j++){
-                if(nums[i] > maxOfLts[j]){
-                    if(dp[j] + 1 > dp[i]){
-                        maxOfLts[i] = nums[i];
-                        dp[i] = dp[j] + 1;
-                    }
+                if(nums[j] < nums[i]){
+                    dp[i] = Math.max(dp[i], dp[j] + 1);
                 }
             }
-            if(dp[i] == 0){
-                dp[i] = 1;
-                maxOfLts[i] = nums[i];
+            len = Math.max(len, dp[i]);
+        }
+        return len;
+    }
+
+    /**
+     * 53. 最大子数组和
+     * 给你一个整数数组 nums ，请你找出一个具有最大和的连续子数组（子数组最少包含一个元素），返回其最大和。
+     *
+     * 子数组是数组中的一个连续部分。
+     */
+    public int maxSubArray(int[] nums) {
+        int[] dp = new int[nums.length];
+        int res = 0;
+        for(int i = 0; i < nums.length; i++){
+            if(i == 0){
+                dp[i] = nums[0];
+            }else{
+                dp[i] = Math.max(nums[i], dp[i-1]+ nums[i]);
             }
-            res = Math.max(res, dp[i]);
+            res = Math.max(dp[i], res);
         }
         return res;
     }
@@ -231,20 +241,23 @@ public class CommonSolution {
      * nums 的任何子数组的乘积都 保证 是一个 32-位 整数
      */
     public int maxProduct(int[] nums) {
-        int[] dp = new int[nums.length];
-        if(nums.length == 1){
-            return nums[0];
+        // 当前元素有多种情况时, 需要考虑增加 动态规划数组的数量
+        int[] maxProd = new int[nums.length];
+        int[] minProd = new int[nums.length];
+        if(nums.length == 0){
+            return 0;
         }
-        dp[0] = nums[0];
-        int res = Integer.MIN_VALUE;
+        maxProd[0] = nums[0];minProd[0] = nums[0];
+        int res = nums[0];
         for(int i = 1; i < nums.length; i++){
-            int t = nums[i] * dp[i-1];
-            if(t >= dp[i-1]){
-                dp[i] = t;
-            }else{
-                dp[i] = nums[i];
-            }
-            res = Math.max(res, dp[i]);
+            int t = Math.max(nums[i] * minProd[i-1], nums[i] * maxProd[i-1]);
+            t = Math.max(t, nums[i]);
+            maxProd[i] = t;
+            res = Math.max(t, res);
+            t = Math.min(nums[i] * minProd[i-1], nums[i] * maxProd[i-1]);
+            t = Math.min(t, nums[i]);
+            minProd[i] = t;
+            res = Math.max(t, res);
         }
         return res;
     }

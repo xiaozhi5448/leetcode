@@ -174,4 +174,37 @@ public class CommonSolution {
         swap(nums, lowerPtr, upperPtr);
         reverse(nums,lowerPtr+1, nums.length-1);
     }
+
+    public int countHillValley(int[] nums) {
+        if(nums.length <= 2){
+            return 0;
+        }
+        int res = 0;
+        for(int i = 1; i < nums.length; i++){
+            if(nums[i] == nums[i-1]){
+                continue;
+            }
+            int left = i-1;
+            while(left >= 0 && nums[left] == nums[i]){
+                left--;
+            }
+            if(left < 0){
+                continue;
+            }
+            int right = i+1;
+            while(right < nums.length && nums[right] == nums[i]){
+                right++;
+            }
+            if(right >= nums.length){
+                break;
+            }
+            if(nums[left] > nums[i] && nums[right] > nums[i]){
+                res++;
+            }
+            if(nums[left] < nums[i] && nums[right] < nums[i]){
+                res++;
+            }
+        }
+        return res;
+    }
 }
