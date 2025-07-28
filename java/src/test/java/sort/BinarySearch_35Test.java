@@ -13,6 +13,10 @@ public class BinarySearch_35Test {
         int[] nums = new int[]{1,3};
         int res = util.searchInsert(nums, 3);
         System.out.println(res);
-        Assert.assertEquals(res, 1);
+        Assert.assertEquals(1, res);
+
+        nums  = new int[]{1,3,5,6};
+        int index = util.searchInsert(nums, 2);
+        Assert.assertEquals(1, index);
     }
 }
