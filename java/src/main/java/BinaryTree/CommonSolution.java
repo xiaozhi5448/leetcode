@@ -133,4 +133,30 @@ public class CommonSolution {
     public TreeNode buildTree(int[] preorder, int[] inorder) {
         return buildTree(preorder, 0, preorder.length-1, inorder, 0, inorder.length-1);
     }
+
+    /**
+     * 给定一个二叉树的根节点 root ，和一个整数 targetSum ，求该二叉树里节点值之和等于 targetSum 的 路径 的数目。
+     *
+     * 路径 不需要从根节点开始，也不需要在叶子节点结束，但是路径方向必须是向下的（只能从父节点到子节点）。
+     */
+
+    private int findPathCount(TreeNode root, Map<Long, Integer> pathPrefixSum, long prefixSum, int targetSum){
+        if(root == null){
+            return 0;
+        }
+        long currSum = prefixSum + root.val;
+        int ret = pathPrefixSum.getOrDefault(currSum - targetSum, 0); // 前缀和 等于 当前路径和 减去 targetSum 的数量
+        pathPrefixSum.put(currSum, pathPrefixSum.getOrDefault(currSum, 0) + 1);
+        int leftRet = findPathCount(root.left, pathPrefixSum, currSum, targetSum);
+        int rightRet = findPathCount(root.right, pathPrefixSum, currSum, targetSum);
+        pathPrefixSum.put(currSum, pathPrefixSum.getOrDefault(currSum, 0) -1 );
+        return ret + leftRet + rightRet;
+    }
+
+    public int pathSum(TreeNode root, int targetSum) {
+        Map<Long, Integer> pathRecorder = new HashMap<>();
+        pathRecorder.put(0L, 1);
+        return findPathCount(root, pathRecorder, 0, targetSum);
+    }
+
 }

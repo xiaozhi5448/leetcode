@@ -299,4 +299,39 @@ public class CommonSolution {
         return 0;
     }
 
+    /**
+     * 一个机器人位于一个 m x n 网格的左上角 （起始点在下图中标记为 “Start” ）。
+     *
+     * 机器人每次只能向下或者向右移动一步。机器人试图达到网格的右下角（在下图中标记为 “Finish” ）。
+     *
+     * 问总共有多少条不同的路径？
+     * @param m
+     * @param n
+     * @return
+     */
+    public int uniquePaths(int m, int n) {
+        // 到位置 i,j 的路径条数 等 i-1,j  与 i, j-1 路径条数之和
+        int[][] pathCount = new int[m][n];
+        for(int i = 0; i < m ;i++){
+            for(int j = 0; j < n; j++){
+                if(i == 0 && j == 0){
+                    pathCount[i][j] = 1;
+                    continue;
+                }
+                int upperPathCount = i-1>=0? pathCount[i-1][j]:0;
+
+                int leftPathCount = j - 1 >= 0? pathCount[i][j-1]:0;
+                pathCount[i][j] = upperPathCount + leftPathCount;
+            }
+        }
+        return pathCount[m-1][n-1];
+
+    }
+
+    /**
+     * 给定一个包含非负整数的 m x n 网格 grid ，请找出一条从左上角到右下角的路径，使得路径上的数字总和为最小。
+     *
+     * 说明：每次只能向下或者向右移动一步。
+     */
+
 }
