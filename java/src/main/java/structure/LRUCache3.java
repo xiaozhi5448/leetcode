@@ -2,57 +2,72 @@ package structure;
 
 import java.util.HashMap;
 
-class ListNode{
-    int val;
-    int key;
-    ListNode prev = null;
-    ListNode next = null;
-    public ListNode(int key, int val){
+class ListNode<K, V>{
+    V val;
+    K key;
+    ListNode<K, V> prev = null;
+    ListNode<K, V> next = null;
+    public ListNode(K key, V val){
         this.key = key;
         this.val = val;
     }
 }
 
-public class LRUCache3 {
+public class LRUCache3 <K, V>{
     int capacity;
-    HashMap<Integer, ListNode> map = new HashMap<>();
-    ListNode head = new ListNode(-1,-1);
-    ListNode tail = new ListNode(-1,-1);
+    HashMap<K, ListNode<K, V>> map = new HashMap<>();
+    ListNode<K, V> head = new ListNode<>(null,null);
+    ListNode<K, V> tail = new ListNode<>(null,null);
 
     public LRUCache3(int size){
         capacity = size;
         head.next = tail;
         tail.prev =head;
     }
-    private void addToEnd(ListNode node){
+
+    private void addToEnd(ListNode<K, V> node){
         node.prev = tail.prev;
+        node.prev.next = node;
         node.next = tail;
         tail.prev = node;
     }
-    public int get(int key){
-        if(!map.containsKey(key)){
-            return -1;
-        }
-        ListNode node = map.get(key);
-        node.next.prev = node.prev;
-        node.prev.next = node.next;
+
+    private void moveToEnd(ListNode<K, V> node){
+        delete(node);
         addToEnd(node);
+    }
+
+    private void delete(ListNode<K, V> node){
+        ListNode<K, V> prev = node.prev;
+        ListNode<K, V> next = node.next;
+        prev.next = next;
+        next.prev = prev;
+    }
+
+    public V get(K key){
+        if(!map.containsKey(key)){
+            return null;
+        }
+        ListNode<K, V> node = map.get(key);
+        moveToEnd(node);
         return node.val;
     }
-    public void put(int key, int val){
-        if(get(key) != -1){
-            ListNode node = map.get(key);
+
+    public void put(K key, V val){
+        ListNode<K, V> node;
+        if(map.containsKey(key)){
+            node = map.get(key);
             node.val = val;
+            moveToEnd(node);
         }else{
-            ListNode node = new ListNode(key, val);
+            node = new ListNode<>(key, val);
             addToEnd(node);
             map.put(key, node);
             if(map.size() > capacity){
-                map.remove(head.next.key);
-                head.next = head.next.next;
-                head.next.prev = head;
+                ListNode<K, V> header = head.next;
+                delete(header);
+                map.remove(header.key);
             }
         }
     }
-
 }

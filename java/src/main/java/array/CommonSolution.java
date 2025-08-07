@@ -1,9 +1,6 @@
 package array;
 
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class CommonSolution {
@@ -206,5 +203,46 @@ public class CommonSolution {
             }
         }
         return res;
+    }
+
+    /**
+     * 49. 字母异位词分组
+     * 已解答
+     * 中等
+     * 相关标签
+     * premium lock icon
+     * 相关企业
+     * 给你一个字符串数组，请你将 字母异位词 组合在一起。可以按任意顺序返回结果列表。
+     *
+     *
+     *
+     * 示例 1:
+     *
+     * 输入: strs = ["eat", "tea", "tan", "ate", "nat", "bat"]
+     *
+     * 输出: [["bat"],["nat","tan"],["ate","eat","tea"]]
+     *
+     * 解释：
+     *
+     * 在 strs 中没有字符串可以通过重新排列来形成 "bat"。
+     * 字符串 "nat" 和 "tan" 是字母异位词，因为它们可以重新排列以形成彼此。
+     * 字符串 "ate" ，"eat" 和 "tea" 是字母异位词，因为它们可以重新排列以形成彼此。
+     */
+    private String sortString(String item){
+        char[] charArray = item.toCharArray();
+        Arrays.sort(charArray);
+        return new String(charArray);
+
+    }
+    public List<List<String>> groupAnagrams(String[] strs) {
+        Map<String, List<String>> data = new HashMap<>();
+        for(String str: strs){
+            String key = sortString(str);
+            if(!data.containsKey(key)){
+                data.put(key, new ArrayList<>());
+            }
+            data.get(key).add(str);
+        }
+        return new ArrayList<>(data.values());
     }
 }
