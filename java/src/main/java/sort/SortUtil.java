@@ -1,5 +1,9 @@
 package sort;
 
+import org.apache.commons.lang3.time.StopWatch;
+
+import java.util.concurrent.TimeUnit;
+
 public class SortUtil {
 
     private static void swap(int[] nums, int i, int j){
@@ -136,5 +140,18 @@ public class SortUtil {
             minHeapify(nums, 0, --heapSize);
         }
 
+    }
+
+    @FunctionalInterface
+    public interface SortOperation{
+        void sort(int[] nums);
+    }
+
+    public static void costCalProcess(SortOperation operation, int[] params, String tag){
+        StopWatch stopWatch = new StopWatch();
+        stopWatch.start();
+        operation.sort(params);
+        stopWatch.stop();
+        System.out.println("method: " + tag + ", cost: " + stopWatch.getTime(TimeUnit.MILLISECONDS) + " mills");
     }
 }

@@ -76,7 +76,6 @@ public class CommonSolution {
                     left = mid+1;
                 }
             }else if(target < nums[mid]){
-
                 if(order(nums, left, mid) && target < nums[left]){
                     left = mid + 1;
                 }else{

@@ -297,30 +297,70 @@ public class CommonSolution {
         }
     }
 
+    // 多线程交叉打印26个字母
+    private int index = 0;
+
+    private void showCode(){
+        int code = 'a' + index;
+        System.out.print((char)code);
+    }
+    public void firstPrinter(){
+        while(index < 26){
+            synchronized (this){
+                if(index >= 26){
+                    break;
+                }
+                if(index % 3 != 1){
+                    this.notifyAll();
+                }else{
+                    showCode();
+                    index++;
+                }
+            }
+        }
+    }
+    public void secondPrinter(){
+        while(index < 26){
+            synchronized (this){
+                if(index >= 26){
+                    break;
+                }
+                if(index % 3 != 2){
+                    this.notifyAll();
+                }else{
+                    showCode();
+                    index++;
+                }
+            }
+        }
+    }
+    public void thirdPrinter(){
+        while (index < 26){
+            synchronized (this){
+                if(index >= 26){
+                    break;
+                }
+                if(index % 3 != 0){
+                    this.notifyAll();
+                }else{
+                    showCode();
+                    index++;
+                }
+            }
+        }
+    }
+
     public static void main(String[] args) throws InterruptedException{
-        ZeroEvenOdd zeroEvenOdd = new ZeroEvenOdd(4);
-        ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(3, 3, 60, TimeUnit.SECONDS, new ArrayBlockingQueue<>(3), new ThreadPoolExecutor.CallerRunsPolicy());
-        threadPoolExecutor.execute(() ->{
-            try {
-                zeroEvenOdd.zero(System.out::print);
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
-        });
-        threadPoolExecutor.execute(() -> {
-            try {
-                zeroEvenOdd.even(System.out::print);
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
-        });
-        threadPoolExecutor.execute(() -> {
-            try {
-                zeroEvenOdd.odd(System.out::print);
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
-        });
+        CommonSolution commonSolution = new CommonSolution();
+        ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(3, // 核心线程数
+                3, // 最大线程数
+                60, // 线程空闲超过该值, 超过核心线程数的线程会自动销毁
+                TimeUnit.SECONDS, // 时间单位
+                new ArrayBlockingQueue<>(3), // 线程队列, 当核心线程数满了之后请求会进队列
+                new ThreadPoolExecutor.CallerRunsPolicy()); // 当线程池线程数量与队列都被打满, 采用何种策略
+        threadPoolExecutor.execute(commonSolution::firstPrinter);
+        threadPoolExecutor.execute(commonSolution::secondPrinter);
+        threadPoolExecutor.execute(commonSolution::thirdPrinter);
         threadPoolExecutor.shutdown();
     }
 }

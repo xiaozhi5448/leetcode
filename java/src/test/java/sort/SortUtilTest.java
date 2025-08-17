@@ -16,7 +16,7 @@ public class SortUtilTest {
     static Logger logger;
     int[] nums;
     static StopWatch stopWatch;
-    int size = 10000;
+    int size = 100000;
     @BeforeClass
     public static void init(){
         util = new SortUtil();
@@ -30,31 +30,37 @@ public class SortUtilTest {
         for(int i = 0; i<size;i++){
             nums[i] = ThreadLocalRandom.current().nextInt(10000);
         }
+        stopWatch.reset();
 
     }
     @Test
     public void testQuickSort() {
-        stopWatch.start();
-        util.quickSort(nums, 0, size-1);
-        stopWatch.stop();
-        logger.info("cost: " + stopWatch.getTime(TimeUnit.SECONDS));
+        SortUtil.costCalProcess(new SortUtil.SortOperation() {
+            @Override
+            public void sort(int[] nums) {
+                SortUtil.quickSort(nums, 0, nums.length-1);
+            }
+        }, nums, "quicksort");
     }
 
     @Test
     public void testBubbleSort(){
-        stopWatch.start();
-        util.bubbleSort(nums);
-        stopWatch.stop();
-        logger.info("bubble sort cost: " + stopWatch.getTime(TimeUnit.SECONDS));
-
+        SortUtil.costCalProcess(new SortUtil.SortOperation() {
+            @Override
+            public void sort(int[] nums) {
+                SortUtil.bubbleSort(nums);
+            }
+        }, nums, "bubblesort");
     }
 
     @Test
     public void testSelectSort(){
-        stopWatch.start();
-        util.selectSort(nums);
-        stopWatch.stop();
-        logger.info("select sort cost: " + stopWatch.getTime(TimeUnit.SECONDS));
+        SortUtil.costCalProcess(new SortUtil.SortOperation() {
+            @Override
+            public void sort(int[] nums) {
+                SortUtil.selectSort(nums);
+            }
+        }, nums, "select sort");
     }
 
     @Test
@@ -62,7 +68,7 @@ public class SortUtilTest {
         stopWatch.start();
         util.insertionSort(nums);
         stopWatch.stop();
-        logger.info("insertion sort cost: " + stopWatch.getTime(TimeUnit.SECONDS));
+        logger.info("insertion sort cost: " + stopWatch.getTime(TimeUnit.MILLISECONDS));
     }
 
     @Test
@@ -70,7 +76,7 @@ public class SortUtilTest {
         stopWatch.start();
         util.mergeSort(nums);
         stopWatch.stop();
-        logger.info("merge sort cost: " + stopWatch.getTime(TimeUnit.SECONDS));
+        logger.info("merge sort cost: " + stopWatch.getTime(TimeUnit.MILLISECONDS));
     }
 
     @Test
@@ -78,6 +84,6 @@ public class SortUtilTest {
         stopWatch.start();
         util.heapSort(nums);
         stopWatch.stop();
-        logger.info("heap sort cost: " + stopWatch.getTime(TimeUnit.SECONDS));
+        logger.info("heap sort cost: " + stopWatch.getTime(TimeUnit.MILLISECONDS));
     }
 }
